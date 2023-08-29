@@ -25,7 +25,7 @@ def main():
     device = torch.device("cuda:1") if torch.cuda.is_available() else "cpu"
     # load sample image
     image = Image.open("./docs/_static/n015-2018-07-18-11-07-57+0800__CAM_FRONT__1531883536912466.jpg").convert("RGB")
-    save_path = os.path.join("/workspace/LAVIS/image_test/", f"image.png")
+    save_path = os.path.join("/workspace/blip2_mod/image_test/", f"image.png")
     image.save(save_path)
     cropped_image = image.crop((768.5951699939305,
                 434.7182566728917,
@@ -33,11 +33,11 @@ def main():
                 514.4538944717932))
     
 
-    save_path = os.path.join("/workspace/LAVIS/image_test/", f"crop_image.png")
+    save_path = os.path.join("/workspace/blip2_mod/image_test/", f"crop_image.png")
     cropped_image.save(save_path)
 
     image = concatenate_images(image, cropped_image)
-    save_path = os.path.join("/workspace/LAVIS/image_test/", f"concate_image.png")
+    save_path = os.path.join("/workspace/blip2_mod/image_test/", f"concate_image.png")
     image.save(save_path)
     
     # loads BLIP-2 pre-trained model
@@ -47,7 +47,7 @@ def main():
 
     # model = Blip2OPT()
     # Load the fine-tuned weights
-    fine_tuned_weights_path = "/workspace/LAVIS/lavis/output/BLIP2/Caption_coco/20230821065/checkpoint_best.pth"
+    fine_tuned_weights_path = "/workspace/blip2_mod/lavis/output/BLIP2/Caption_coco/20230821065/checkpoint_best.pth"
     # fine_tuned_weights_path = "/workspace/LAVIS/lavis/output/BLIP2/Caption_coco/20230828105/checkpoint_best.pth"
     checkpoint = torch.load(fine_tuned_weights_path, map_location='cpu')
     model.load_state_dict(checkpoint['model'], strict=False)
