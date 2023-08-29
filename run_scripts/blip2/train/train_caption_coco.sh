@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=0,1,3 python -m torch.distributed.run --nproc_per_node=3 /workspace/LAVIS/train.py --cfg-path /workspace/LAVIS/lavis/projects/blip2/train/caption_coco_ft.yaml
