@@ -7,4 +7,4 @@ env:
   # For default users
   # cache_root: "cache"
   # For internal use with persistent storage
-  cache_root: "/workspace/LAVIS/"
+  cache_root: "/workspace/blip2_mod/"
