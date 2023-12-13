@@ -371,7 +371,7 @@ class RunnerBase:
                 #     )
                 train_stats = self.train_epoch(cur_epoch)
                 self.log_stats(split_name="train", stats=train_stats)
-
+                self._save_checkpoint(cur_epoch, is_best=False)
             # evaluation phase
             if len(self.valid_splits) > 0:
                 for split_name in self.valid_splits:
@@ -627,7 +627,8 @@ class RunnerBase:
 
         state_dict = checkpoint["model"]
         self.unwrap_dist_model(self.model).load_state_dict(state_dict)
-
+        # self.unwrap_dist_model(self.model).load_state_dict(state_dict, strict=False)
+        
         self.optimizer.load_state_dict(checkpoint["optimizer"])
         if self.scaler and "scaler" in checkpoint:
             self.scaler.load_state_dict(checkpoint["scaler"])

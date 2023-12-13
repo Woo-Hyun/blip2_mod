@@ -10,7 +10,7 @@ import torch
 from collections import OrderedDict
 
 from lavis.datasets.datasets.base_dataset import BaseDataset
-from PIL import Image
+from PIL import Image, ImageDraw
 
 def convert_geometry_to_bbox(geometry):
     """
@@ -94,11 +94,16 @@ class CaptionDataset(BaseDataset, __DisplMixin):
         upper = min([point[1] for point in geometry])
         right = max([point[0] for point in geometry])
         lower = max([point[1] for point in geometry])
+
+        ###############
         cropped_image = image.crop((left, upper, right, lower))
-
         image = concatenate_images(image, cropped_image)
+        ###############
 
-        # save_path = os.path.join("/workspace/LAVIS/image_test/", f"image_{index}.png")
+        # draw = ImageDraw.Draw(image)
+        # draw.rectangle([left, upper, right, lower], outline="red", width=3)
+
+        # save_path = os.path.join("/workspace/blip2_mod/image_test/", f"image_{index}.png")
         # image.save(save_path)
         # print("saved")
 

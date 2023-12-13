@@ -78,9 +78,21 @@ class Blip2Qformer(Blip2Base):
             if "_query" in name:
                 key_orig = name.replace("_query", "")
                 param.data.copy_(state_dict[key_orig])
+        #############
+        for name, param in self.Qformer.bert.encoder.named_parameters():
+            param.requires_grad = False
+        # for name, param in self.Qformer.query_tokens.named_parameters():
+        #     param.requires_grad = False
+        # self.query_tokens = self.query_tokens.eval()
+        # self.query_tokens.train = disabled_train
+        self.query_tokens.requires_grad = False
+        logging.info("freeze qformer bert encoder and query_tokens")
+        #############
 
         self.vision_proj = nn.Linear(self.Qformer.config.hidden_size, embed_dim)
         self.text_proj = nn.Linear(self.Qformer.config.hidden_size, embed_dim)
+        for name, param in self.text_proj.named_parameters():
+            param.requires_grad = False
 
         self.itm_head = nn.Linear(self.Qformer.config.hidden_size, 2)
 
@@ -127,6 +139,12 @@ class Blip2Qformer(Blip2Base):
         text_feat = F.normalize(
             self.text_proj(text_output.last_hidden_state[:, 0, :]), dim=-1
         )
+        ##### detach #####
+        text_feat_zero_grad = text_feat.clone()
+        text_feat = text_feat.detach()
+        loss = text_feat_zero_grad.sum() * 0
+        loss.backward()
+        ##################
 
         ###============== Image-text Contrastive ===================###
         image_feats_all = concat_all_gather(
@@ -270,10 +288,10 @@ class Blip2Qformer(Blip2Base):
         loss_lm = lm_output.loss
 
         return BlipOutput(
-            loss=loss_itc + loss_itm + loss_lm,
+            loss=loss_itc + (loss_itm * 0) + (loss_lm * 0),
             loss_itc=loss_itc,
-            loss_itm=loss_itm,
-            loss_lm=loss_lm,
+            loss_itm=loss_itm * 0,
+            loss_lm=loss_lm * 0,
         )
 
     @torch.no_grad()

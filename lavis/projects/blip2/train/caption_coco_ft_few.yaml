@@ -30,7 +30,7 @@ datasets:
           storage: '/workspace/drama_data/combined/'
         annotations: 
           train:
-            storage: '/workspace/drama_data/blip2_train_data.json'
+            storage: '/workspace/drama_data/blip2_train_data_few.json'
           val:
             storage: '/workspace/drama_data/blip2_val_data.json'
           test:
@@ -45,8 +45,8 @@ run:
   warmup_lr: 1e-8
   warmup_steps: 1000
   weight_decay: 0.05
-  max_epoch: 5
-  batch_size_train: 16
+  max_epoch: 6
+  batch_size_train: 5
   batch_size_eval: 8
   num_workers: 4
   accum_grad_iters: 1
@@ -55,11 +55,11 @@ run:
   min_len: 8
   num_beams: 5
 
-  seed: 2023
+  seed: 42
   output_dir: "output/BLIP2/Caption_coco"
 
   amp: True
-  resume_ckpt_path: null
+  resume_ckpt_path: "/workspace/blip2_mod/lavis/output/BLIP2/Caption_coco/20230904092_qformer/checkpoint_best.pth"
 
   evaluate: False
   train_splits: ["train"]

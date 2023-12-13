@@ -1,1 +1,1 @@
-CUDA_VISIBLE_DEVICES=0,1,3 python -m torch.distributed.run --nproc_per_node=3 /workspace/blip2_mod/train.py --cfg-path /workspace/blip2_mod/lavis/projects/blip2/train/caption_coco_ft.yaml
+TORCH_DISTRIBUTED_DEBUG=DETAIL CUDA_VISIBLE_DEVICES=0,1,2,3 python -m torch.distributed.run --nproc_per_node=4 /workspace/blip2_mod/train.py --cfg-path /workspace/blip2_mod/lavis/projects/blip2/train/caption_coco_ft.yaml
