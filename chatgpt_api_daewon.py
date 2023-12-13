@@ -8,7 +8,7 @@ import math
 import time
 
 def main(nuscenes_dir: str, json_dir: str):
-    My_OpenAI_key = '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'
+    My_OpenAI_key = ''
     openai.api_key = My_OpenAI_key
 
     chat_completion = openai.ChatCompletion()
