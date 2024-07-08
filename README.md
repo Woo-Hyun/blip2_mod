@@ -34,5 +34,6 @@ The dataset is organized into the following structure:
   ],
   "other_image_file_name": ...
 }
+```
 
 If you wanna use this dataset...
