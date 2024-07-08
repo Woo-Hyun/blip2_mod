@@ -36,4 +36,6 @@ The dataset is organized into the following structure:
 }
 ```
 
-If you wanna use this dataset...
+## Usage
+
+Clone this repository, then parse the JSON to use it alongside the original nuScenes dataset.
