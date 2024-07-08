@@ -6,6 +6,7 @@ This repository contains the nuScenes-Text dataset for autonomous driving resear
 
 The dataset is organized into the following structure:
 
+```nuscenes_with_text
 { 
   "image_file_name": [                    
     {
@@ -32,4 +33,4 @@ The dataset is organized into the following structure:
     another objects in this image ...
   ],
   "other_image_file_name": ...
-}
+}```
